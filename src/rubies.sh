@@ -18,6 +18,9 @@ rubies() {
 END_OF_RB
 }
 
+# rbs means rubies or ruby switch.
+alias rbs=rubies
+
 _rubies_cd_hook() {
   local current_dir="$PWD"
   local args
