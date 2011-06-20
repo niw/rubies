@@ -12,7 +12,7 @@ class Rubies
     # FIXME keep original GEM_HOME
     gem_home = nil
 
-    if ruby_path = ruby_path(name)
+    if name && ruby_path = ruby_path(name)
       ruby_name = File.basename(ruby_path)
       ruby_bin = File.join(ruby_path, "bin")
       if gem_home = gem_home(File.join(ruby_bin, "ruby"))
