@@ -2,7 +2,7 @@ Rubies
 ======
 
 Rubies (or rbs) is a small script to switch Ruby runtime by rewriting PATH and GEM_HOME.
-No trics. The script is written in Ruby works with a small shell script.
+No tricks. The script is written in Ruby works with a small shell script.
 
 *This script does*
 
@@ -21,12 +21,12 @@ Getting Started
 1.  Clone this repository to `~/.rubies`.
 
 2.  Source `~/.rubies/src/rubies.sh` in your `~/.bashrc` or `~/.zshrc`.
-    Sorry, but no `csh` support.
+    Sorry, no `csh` support.
 
         source "$HOME/.rubies/src/rubies.sh"
 
 3.  Install Ruby into `~/.rubies` by yourself from Ruby source code.
-    Example configure script, patches are in `~/.rubies/src/`.
+    Example configure scripts, patches are in `~/.rubies/src/`.
 
         $ tar xzvf ruby-enterprise-1.8.7-2009.10.tar.gz
         $ cd ruby-enterprise-1.8.7-2009.10
