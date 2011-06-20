@@ -25,15 +25,9 @@ class Rubies
     export "PATH", paths.uniq.join(":")
     export "GEM_HOME", gem_home
     export "RUBIES_RUBY_NAME", ruby_name
-
-    message "Using #{ruby_name || "default ruby"}"
   end
 
   private
-
-  def message(message)
-    STDERR.puts "\e[31m#{message}\e[0m"
-  end
 
   def export(name, value = nil)
     if value
