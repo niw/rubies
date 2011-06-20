@@ -14,7 +14,7 @@ rubies() {
     $LOAD_PATH.unshift File.join(base_path, "src")
     require "rubies"
     rubies = Rubies.new(base_path)
-    rubies.select!(ARGV.first) or exit 1
+    rubies.select!(ARGV.first)
 END_OF_RB
 }
 
