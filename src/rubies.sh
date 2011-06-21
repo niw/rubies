@@ -21,41 +21,37 @@ END_OF_RB
 # rbs means rubies or ruby switch.
 alias rbs=rubies
 
-# FIXME do not expand .rc file here, use path to them
-# then parse it in rubies.rb
 _rubies_cd_hook() {
-  local current_dir="$PWD"
-  local args
+  local current_dir=`pwd -P`
+  local rcfile
 
   while : ; do
-    if [ "$current_dir" = "." ]; then
-      break
-    fi
     if [ -f "$current_dir/.rubiesrc" ]; then
-      args=$(cat "$current_dir/.rubiesrc")
+      rcfile="$current_dir/.rubiesrc"
       break
     fi
-    # FIXME remove this once migrate rvm to rubies.
     if [ -f "$current_dir/.rvmrc" ]; then
-      args=$(cat "$current_dir/.rvmrc" | grep rvm | sed -E 's/^rvm ([^@]+).*/\1/g')
+      rcfile="$current_dir/.rvmrc"
       break
     fi
-    if [ -z "$current_dir" -o "$current_dir" = "$HOME" -o "$current_dir" = "/" ]; then
-      args="default"
+    if [ -z "$current_dir" \
+      -o "$current_dir" = "$HOME" \
+      -o "$current_dir" = "/" \
+      -o "$current_dir" = "." ]; then
       break
     fi
     current_dir=$(dirname "$current_dir")
   done
 
-  # We can switch ruby anytime by rubies command, and it will keeps
-  # until we're not going out from the direcoty.
-  if [ ! "$RUBIES_LAST_RUBIES_ARGS" = "$args" ]; then
-    rubies $args
-    export RUBIES_LAST_RUBIES_ARGS="$args"
+  if [ ! "$RUBIES_LAST_RC_FILE" = "$rcfile" ]; then
+    rubies -c $rcfile
+    export RUBIES_LAST_RC_FILE="$rcfile"
   fi
 }
 
 enable_rubies_cd_hook() {
+  _rubies_cd_hook
+
   # If we could use zsh chpwd_functions, use it.
   if [ -n "$ZSH_VERSION" ]; then
     autoload -Uz is-at-least
