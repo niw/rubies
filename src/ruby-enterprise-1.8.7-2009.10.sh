@@ -14,12 +14,18 @@ fi
 # Apply patch to avoid install rubygems and not-so-useful-gems.
 patch -N -p0 < "$CURRENT_DIR/ruby-enterprise-1.8.7-2009.10-installer.rb.patch"
 
-# Install REE with dependencies.
-# Use OS X default libraries.
+# Use OS X default libraries except readline.
+# I've made readline5 formura for Homebrew, because Homebrew doesn't have it.
 ./installer \
 	-a "$HOME/.rubies/ruby-enterprise-1.8.7-2009.10" \
 	--dont-install-useful-gems \
+	-c --disable-option-checking \
 	-c --with-zlib-dir=/usr/lib \
-	-c --with-readline-dir=/usr/lib \
+	-c --with-ncurses-dir=/usr/lib \
+	-c --with-readline-dir=`brew --prefix readline5` \
 	-c --with-iconv-dir=/usr/lib \
-	-c --with-openssl-dir=/usr/lib
+	-c --with-openssl-dir=/usr/lib \
+	-c --enable-shared \
+	-c --enable-pthread \
+	-c --disable-install-doc \
+	-c --with-arch=x86_64

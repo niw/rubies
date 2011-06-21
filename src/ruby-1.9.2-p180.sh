@@ -10,11 +10,14 @@ if [ -f /usr/bin/g++-4.2 ]; then
 	export CXX=/usr/bin/g++-4.2
 fi
 
-# Use OS X default libraries.
+# Use OS X default libraries except readline.
+# I've made readline5 formura for Homebrew, because Homebrew doesn't have it.
 ./configure \
 	--prefix "$HOME/.rubies/ruby-1.9.2-p180" \
+	--disable-option-checking \
 	--with-zlib-dir=/usr/lib \
-	--with-readline-dir=/usr/lib \
+	--with-ncurses-dir=/usr/lib \
+	--with-readline-dir=`brew --prefix readline5` \
 	--with-iconv-dir=/usr/lib \
 	--with-openssl-dir=/usr/lib \
 	--enable-shared \
