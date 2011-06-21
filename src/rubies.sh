@@ -21,11 +21,16 @@ END_OF_RB
 # rbs means rubies or ruby switch.
 alias rbs=rubies
 
+# FIXME do not expand .rc file here, use path to them
+# then parse it in rubies.rb
 _rubies_cd_hook() {
   local current_dir="$PWD"
   local args
 
   while : ; do
+    if [ "$current_dir" = "." ]; then
+      break
+    fi
     if [ -f "$current_dir/.rubiesrc" ]; then
       args=$(cat "$current_dir/.rubiesrc")
       break
