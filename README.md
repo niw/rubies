@@ -40,3 +40,22 @@ Getting Started
 5.  Switch Ruby by `rubies` or `rbs` command.
 
         $ rubies ree
+
+Switch Ruby in each Projects
+----------------------------
+
+[rvm](https://rvm.beginrescueend.com/) provides `cd` command hook
+so we can switch Ruby in each project directories which is nice.
+Rubies provides same hook which can read existing `.rvmrc` file.
+
+1.  Add `enable_rubies_cd_hook` in your `~/.bashrc` or `~/.zshrc`
+    after source `~/.rubies/src/rubies.sh`.
+
+        source "$HOME/.rubies/src/rubies.sh"
+        enable_rubies_cd_hook
+
+2.  Place `.rubiesrc` in each project directory or `~/` which can select default Ruby.
+    `.rubiesrc` is YAML format.
+	We can use only `ruby` parameter for now which selects Ruby.
+
+        $ echo "ruby: ree" > ~/.rubiesrc
