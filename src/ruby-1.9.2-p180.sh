@@ -21,6 +21,5 @@ fi
 	--with-iconv-dir=/usr/lib \
 	--with-openssl-dir=/usr/lib \
 	--enable-shared \
-	--enable-pthread \
 	--disable-install-doc \
 	--with-arch=x86_64
