@@ -56,7 +56,8 @@ enable_rubies_cd_hook() {
   if [ -n "$ZSH_VERSION" ]; then
     autoload -Uz is-at-least
     if is-at-least 4.3.4 >/dev/null 2>&1; then
-      chpwd_functions=("${chpwd_functions[@]}" _rubies_cd_hook)
+      typeset -ga chpwd_functions
+      chpwd_functions+=_rubies_cd_hook
       return
     fi
   fi
