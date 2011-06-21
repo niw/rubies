@@ -26,10 +26,6 @@ _rubies_cd_hook() {
   local args
 
   while : ; do
-    if [ -z "$current_dir" -o "$current_dir" = "$HOME" -o "$current_dir" = "/" ]; then
-      args="default"
-      break
-    fi
     if [ -f "$current_dir/.rubiesrc" ]; then
       args=$(cat "$current_dir/.rubiesrc")
       break
@@ -37,6 +33,10 @@ _rubies_cd_hook() {
     # FIXME remove this once migrate rvm to rubies.
     if [ -f "$current_dir/.rvmrc" ]; then
       args=$(cat "$current_dir/.rvmrc" | grep rvm | sed -E 's/^rvm ([^@]+).*/\1/g')
+      break
+    fi
+    if [ -z "$current_dir" -o "$current_dir" = "$HOME" -o "$current_dir" = "/" ]; then
+      args="default"
       break
     fi
     current_dir=$(dirname "$current_dir")
