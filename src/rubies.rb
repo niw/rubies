@@ -1,3 +1,5 @@
+require "yaml"
+
 class Rubies
   attr_reader :base_path
 
@@ -5,8 +7,28 @@ class Rubies
     @base_path = File.expand_path(*base_path)
   end
 
-  # FIXME clean up
-  def select!(name = nil)
+  def run!
+    name = ARGV.shift
+    if /^-c/ === name
+      name = load_rcfile(ARGV.shift)
+    end
+    select(name)
+  end
+
+  private
+
+  def load_rcfile(path)
+    rcfile = File.read(path)
+    if File.basename(path) == ".rvmrc"
+      rcfile[/^rvm (.+?)(@.+)?/, 1]
+    else
+      YAML.load(rcfile)["ruby"]
+    end
+  rescue
+    nil
+  end
+
+  def select(name)
     paths = paths_without_rubies
     ruby_name = nil
     # FIXME keep original GEM_HOME
@@ -26,8 +48,6 @@ class Rubies
     export "GEM_HOME", gem_home
     export "RUBIES_RUBY_NAME", ruby_name
   end
-
-  private
 
   def export(name, value = nil)
     if value
