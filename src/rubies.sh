@@ -1,6 +1,6 @@
 _rubies_exec_ruby() {
-  local path_to_ruby=$1; shift
-  /usr/bin/env -i PATH="$PATH" HOME="$HOME" $path_to_ruby - $*
+  local path_to_ruby="$1"; shift
+  /usr/bin/env -i PATH="$PATH" HOME="$HOME" "$path_to_ruby" - $*
 }
 
 _rubies_eval_rb_result() {
@@ -22,7 +22,7 @@ END_OF_RB
 alias rbs=rubies
 
 _rubies_cd_hook() {
-  local current_dir=`pwd -P`
+  local current_dir="$(pwd -P)"
   local rcfile
 
   while : ; do
@@ -40,11 +40,11 @@ _rubies_cd_hook() {
       -o "$current_dir" = "." ]; then
       break
     fi
-    current_dir=$(dirname "$current_dir")
+    current_dir="$(dirname "$current_dir")"
   done
 
   if [ ! "$RUBIES_LAST_RC_FILE" = "$rcfile" ]; then
-    rubies -c $rcfile
+    rubies -c "$rcfile"
     export RUBIES_LAST_RC_FILE="$rcfile"
   fi
 }
