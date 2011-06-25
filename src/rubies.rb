@@ -20,7 +20,7 @@ class Rubies
   def load_rcfile(path)
     rcfile = File.read(path)
     if File.basename(path) == ".rvmrc"
-      rcfile[/^rvm (.+?)(@.+)?/, 1]
+      rcfile[/^rvm ([^@]+)/, 1]
     else
       YAML.load(rcfile)["ruby"]
     end
