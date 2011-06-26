@@ -50,6 +50,8 @@ _rubies_cd_hook() {
 }
 
 enable_rubies_cd_hook() {
+  # Force to read rubiesrc file first.
+  export RUBIES_LAST_RC_FILE=
   _rubies_cd_hook
 
   # If we could use zsh chpwd_functions, use it.
