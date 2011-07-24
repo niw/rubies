@@ -18,6 +18,7 @@ fi
 	--with-zlib-dir=/usr/lib \
 	--with-ncurses-dir=/usr/lib \
 	--with-readline-dir=`brew --prefix readline5` \
+	--with-libyaml-dir=`brew --prefix libyaml` \
 	--with-iconv-dir=/usr/lib \
 	--with-openssl-dir=/usr/lib \
 	--enable-shared \
