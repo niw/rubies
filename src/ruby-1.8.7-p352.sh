@@ -13,7 +13,7 @@ fi
 # Use OS X default libraries except readline.
 # I've made readline5 formura for Homebrew, because Homebrew doesn't have it.
 ../configure \
-	--prefix "$HOME/.rubies/ruby-1.9.2-p180" \
+	--prefix "$HOME/.rubies/ruby-1.8.7-p352" \
 	--disable-option-checking \
 	--with-zlib-dir=/usr/lib \
 	--with-ncurses-dir=/usr/lib \
