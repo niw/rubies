@@ -15,12 +15,12 @@ fi
 ../configure \
 	--prefix "$HOME/.rubies/ruby-1.9.2-p180" \
 	--disable-option-checking \
+	--enable-shared \
+	--disable-install-doc \
 	--with-zlib-dir=/usr/lib \
 	--with-ncurses-dir=/usr/lib \
 	--with-readline-dir=`brew --prefix readline5` \
 	--with-libyaml-dir=`brew --prefix libyaml` \
 	--with-iconv-dir=/usr/lib \
 	--with-openssl-dir=/usr/lib \
-	--enable-shared \
-	--disable-install-doc \
 	--with-arch=x86_64
