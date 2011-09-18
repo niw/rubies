@@ -37,10 +37,11 @@ class Rubies
     if name && ruby_path = ruby_path(name)
       ruby_name = File.basename(ruby_path)
       ruby_bin = File.join(ruby_path, "bin")
-      if gem_home = gem_home(File.join(ruby_bin, "ruby"))
-        gem_bin = File.join(gem_home, "bin")
-        paths.unshift(gem_bin)
-      end
+
+      gem_home = gem_home(ruby_name)
+      gem_bin = File.join(gem_home, "bin")
+
+      paths.unshift(gem_bin)
       paths.unshift(ruby_bin)
     end
 
@@ -64,10 +65,8 @@ class Rubies
     end
   end
 
-  def gem_home(ruby)
-    ruby_version = %x(#{ruby} -rrbconfig -e 'print RbConfig::CONFIG["ruby_version"]') rescue nil
-    return nil unless ruby_version
-    File.join(base_path, "gems", ruby_version)
+  def gem_home(ruby_name)
+    File.join(base_path, "gems", ruby_name)
   end
 
   def ruby_path(name)
