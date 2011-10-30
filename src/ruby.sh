@@ -26,6 +26,8 @@ elif [ -f "$SRCDIR/version.h" ]; then
   RUBY_PATCHLEVEL=`sed -n 's/^#define RUBY_PATCHLEVEL \([-0-9]*\)/\1/p' "$SRCDIR/version.h"`
   if [ "$RUBY_PATCHLEVEL" = "-1" ]; then
     RUBY_PATCHLEVEL="dev"
+  else
+    RUBY_PATCHLEVEL="p$RUBY_PATCHLEVEL"
   fi
   PREFIX="ruby-$RUBY_VERSION-$RUBY_PATCHLEVEL"
 fi
