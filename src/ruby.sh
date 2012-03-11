@@ -44,11 +44,11 @@ $SRCDIR/configure \
   --disable-option-checking \
   --enable-shared \
   --disable-install-doc \
-  --with-zlib-dir=/usr/lib \
-  --with-ncurses-dir=/usr/lib \
+  --with-zlib-dir=/usr \
+  --with-ncurses-dir=/usr \
   --with-readline-dir=`brew --prefix readline5` \
   --with-libyaml-dir=`brew --prefix libyaml` \
-  --with-iconv-dir=/usr/lib \
-  --with-openssl-dir=/usr/lib \
+  --with-iconv-dir=/usr \
+  --with-openssl-dir=/usr \
   --with-arch=x86_64 \
   | tee config.log
