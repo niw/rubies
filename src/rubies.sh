@@ -1,6 +1,6 @@
 _rubies_exec_ruby() {
   local path_to_ruby="$1"; shift
-  /usr/bin/env -i PATH="$PATH" HOME="$HOME" "$path_to_ruby" - $*
+  exec /usr/bin/env -i PATH="$PATH" HOME="$HOME" "$path_to_ruby" - $*
 }
 
 _rubies_eval_rb_result() {
