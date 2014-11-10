@@ -56,6 +56,8 @@ CONFIGURE_OPTIONS="
   --enable-shared \
   --disable-install-doc \
   --with-arch=x86_64 \
+  --without-tcl \
+  --without-tk \
   --with-zlib-dir=/usr \
   --with-ncurses-dir=/usr \
   --with-iconv-dir=/usr"
