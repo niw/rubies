@@ -70,9 +70,33 @@ class Rubies
   end
 
   def ruby_path(name)
-    path = Dir.glob(File.join(base_path, "#{name}*")).reject{|path|
-      !File.exist?(File.join(path, "bin", "ruby"))}.sort.first
+    path = find_name_in_paths(name, ruby_paths)
     return nil unless path
     File.expand_path(File.readlink(path), File.dirname(path)) rescue path
+  end
+
+  def find_name_in_paths(name, paths)
+    name = name.split(/\W/)
+    paths = paths.inject({}) do |hash, path|
+      hash[File.basename(path).split(/\W/)] = path
+      hash
+    end
+
+    keys = []
+    paths.keys.each do |key|
+      return paths[key] if key == name
+      if (0..(key.size - name.size)).find{|index| key[index, name.size] == name}
+        keys << key
+      end
+    end
+
+    key = keys.sort.last
+    paths[key] if key
+  end
+
+  def ruby_paths
+    Dir.glob(File.join(base_path, "*")).reject do |path|
+      !File.exist?(File.join(path, "bin", "ruby"))
+    end
   end
 end
