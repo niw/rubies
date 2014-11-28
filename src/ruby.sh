@@ -30,15 +30,17 @@ else
   RUBY_PATCHLEVEL="p$RUBY_PATCHLEVEL"
 fi
 
-if [ "$RUBY_MAJOR_VERSION" = "1" ]; then
-  # Use normal GCC if we have.
-  # Once we install Xcode 4.2, it will replace /usr/bin/gcc to llvm-gcc
-  # which causes some unexpected error.
-  if [ -f /usr/bin/gcc-4.2 ]; then
-    export CC=/usr/bin/gcc-4.2
-  fi
-  if [ -f /usr/bin/g++-4.2 ]; then
-    export CXX=/usr/bin/g++-4.2
+# Use gcc-4.2.
+# Normally, you want to install both Xcode command line tools and apple-gcc42.
+# $ xcode-select --install
+# $ brew install apple-gcc42
+if [ "$RUBY_MAJOR_VERSION" = "1" -a "$RUBY_MINOR_VERSION" != "9" ]; then
+  if `type gcc-4.2 2>&1 >/dev/null`; then
+    export CC=`which gcc-4.2`
+    export CXX=`which g++-4.2`
+  else
+    echo "No gcc-4.2 found."
+    exit 1
   fi
 fi
 
