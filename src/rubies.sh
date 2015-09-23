@@ -1,15 +1,15 @@
 _rubies_exec_ruby() {
   local path_to_ruby="$1"; shift
-  exec /usr/bin/env -i PATH="$PATH" HOME="$HOME" "$path_to_ruby" - $*
+  exec /usr/bin/env -i PATH="$PATH" HOME="$HOME" "$path_to_ruby" - "$@"
 }
 
 _rubies_eval_rb_result() {
   # FIXME select ruby if it is in .rubies.
-  eval "$(_rubies_exec_ruby /usr/bin/ruby $*)"
+  eval "$(_rubies_exec_ruby /usr/bin/ruby "$@")"
 }
 
 rubies() {
-  _rubies_eval_rb_result $* << 'END_OF_RB'
+  _rubies_eval_rb_result "$@" << 'END_OF_RB'
     base_path = File.expand_path(".rubies", ENV["HOME"])
     $LOAD_PATH.unshift File.join(base_path, "src")
     require "rubies"
