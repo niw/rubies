@@ -82,29 +82,14 @@ add_configure_option() {
     $1"
 }
 
-# Ruby 2.x.x
-if [[ "$RUBY_MAJOR_VERSION" = "2" ]]; then
-  if [[ "$RUBY_MINOR_VERSION" = "1" ]]; then
-    # I've made readline5 formura for Homebrew, because Homebrew doesn't have it.
-    # See https://github.com/niw/homebrew-additions
-    check_homebrew "readline5"
-    add_configure_option "--with-readline-dir=`brew --prefix readline5`"
-  fi
+check_homebrew "readline"
+add_configure_option "--with-readline-dir=`brew --prefix readline`"
 
-  check_homebrew "openssl"
-  add_configure_option "--with-openssl-dir=`brew --prefix openssl`"
+check_homebrew "openssl"
+add_configure_option "--with-openssl-dir=`brew --prefix openssl`"
 
-  check_homebrew "libyaml"
-  add_configure_option "--with-libyaml-dir=`brew --prefix libyaml`"
-fi
-
-# Ruby 1.9.x
-if [[ "$RUBY_MAJOR_VERSION" = "1" ]]; then
-  if [[ "$RUBY_MINOR_VERSION" = "9" ]]; then
-    check_homebrew "libyaml"
-    add_configure_option "--with-libyaml-dir=`brew --prefix libyaml`"
-  fi
-fi
+check_homebrew "libyaml"
+add_configure_option "--with-libyaml-dir=`brew --prefix libyaml`"
 
 readonly CONFIGURE_OPTIONS
 
