@@ -61,6 +61,7 @@ CONFIGURE_OPTIONS="
   --enable-shared \
   --disable-install-doc \
   --with-arch=x86_64 \
+  --without-gdbm \
   --without-tcl \
   --without-tk \
   --with-iconv-dir=/usr \
