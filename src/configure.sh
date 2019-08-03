@@ -63,9 +63,10 @@ CONFIGURE_OPTIONS="
   --with-arch=x86_64 \
   --without-tcl \
   --without-tk \
-  --with-zlib-dir=/usr \
+  --with-iconv-dir=/usr \
   --with-ncurses-dir=/usr \
-  --with-iconv-dir=/usr"
+  --with-zlib-dir=/usr \
+  "
 
 check_homebrew() {
   # FIXME better way to know the cellar is installed or not.
@@ -78,8 +79,7 @@ check_homebrew() {
 }
 
 add_configure_option() {
-  CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS \
-    $1"
+  CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS $1"
 }
 
 check_homebrew "readline"
