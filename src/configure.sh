@@ -1,11 +1,8 @@
 #!/bin/sh
 
 # Assume the parent directory has ruby source code.
-if [[ -z "$SRCDIR" ]]; then
-  SRCDIR=../
-fi
+readonly SRCDIR=${SRCDIR:-"../"}
 echo "Using ruby source at $SRCDIR"
-readonly SRCDIR
 
 # If we couldn't find `configure` script, then give up.
 if [[ ! -f "$SRCDIR/configure" ]]; then
@@ -40,7 +37,7 @@ readonly RUBY_VERSION
 
 # Read patch level from `version.h`.
 RUBY_PATCHLEVEL=`sed -n 's/^#define RUBY_PATCHLEVEL \([-0-9]*\)/\1/p' "$SRCDIR/version.h"`
-if [ "$RUBY_PATCHLEVEL" = "-1" ]; then
+if [[ "$RUBY_PATCHLEVEL" = "-1" ]]; then
   RUBY_PATCHLEVEL="dev"
 else
   RUBY_PATCHLEVEL="p$RUBY_PATCHLEVEL"
