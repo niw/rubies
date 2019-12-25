@@ -7,12 +7,13 @@ fi
 echo "Using ruby source at $SRCDIR"
 readonly SRCDIR
 
-# If we couldn't find configure script, then give up.
+# If we couldn't find `configure` script, then give up.
 if [[ ! -f "$SRCDIR/configure" ]]; then
   echo "No configure script found." >&2
   exit 1
 fi
 
+# Read ruby version from `version.h`.
 if [[ ! -f "$SRCDIR/version.h" ]]; then
   echo "No version.h found." >&2
   exit 1
@@ -37,7 +38,7 @@ else
 fi
 readonly RUBY_VERSION
 
-# Read patch level from version.h.
+# Read patch level from `version.h`.
 RUBY_PATCHLEVEL=`sed -n 's/^#define RUBY_PATCHLEVEL \([-0-9]*\)/\1/p' "$SRCDIR/version.h"`
 if [ "$RUBY_PATCHLEVEL" = "-1" ]; then
   RUBY_PATCHLEVEL="dev"
@@ -60,7 +61,7 @@ if [[ "$RUBY_VERSION_MAJOR" = "1" && "$RUBY_VERSION_MINOR" != "9" ]]; then
   fi
 fi
 
-# Default prefix is like ~/.rubies/ruby-2.0.0-p0
+# Default prefix is like `~/.rubies/ruby-2.0.0-p0`
 if [[ ! -z "$1" ]]; then
   PREFIX="ruby-$1"
 else
@@ -68,7 +69,7 @@ else
 fi
 readonly PREFIX
 
-# I know Ruby 2.0 is not using libiconv, though.
+# I know Ruby 2.0 is not using `libiconv`, though.
 CONFIGURE_OPTIONS="
   --prefix $HOME/.rubies/$PREFIX \
   --disable-option-checking \
