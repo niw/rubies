@@ -17,11 +17,25 @@ if [[ ! -f "$SRCDIR/version.h" ]]; then
   echo "No version.h found." >&2
   exit 1
 fi
+RUBY_VERSION=$(sed -n 's/^#define RUBY_VERSION "\(.*\)"/\1/p' "$SRCDIR/version.h")
+if [[ -z $RUBY_VERSION ]]; then
+  # Since Ruby 2.7.0, `verison.h` no longer has a plain text `RUBY_VERSION` definition.
+  # Use `include/ruby/version.h` instead.
+  if [[ ! -f "$SRCDIR/include/ruby/version.h" ]]; then
+    echo "No include/ruby/version.h found." >&2
+    exit 1
+  fi
 
-# Read ruby version from version.h.
-readonly RUBY_VERSION=$(sed -n 's/^#define RUBY_VERSION "\(.*\)"/\1/p' "$SRCDIR/version.h")
-readonly RUBY_MAJOR_VERSION=$(echo "$RUBY_VERSION"|cut -d . -f 1)
-readonly RUBY_MINOR_VERSION=$(echo "$RUBY_VERSION"|cut -d . -f 2)
+  readonly RUBY_VERSION_MAJOR=$(sed -n 's/^#define RUBY_API_VERSION_MAJOR \(\d*\)/\1/p' "$SRCDIR/include/ruby/version.h")
+  readonly RUBY_VERSION_MINOR=$(sed -n 's/^#define RUBY_API_VERSION_MINOR \(\d*\)/\1/p' "$SRCDIR/include/ruby/version.h")
+  readonly RUBY_VERSION_TEENY=$(sed -n 's/^#define RUBY_VERSION_TEENY \(\d*\)/\1/p' "$SRCDIR/version.h")
+  RUBY_VERSION="$RUBY_VERSION_MAJOR.$RUBY_VERSION_MINOR.$RUBY_VERSION_TEENY"
+else
+  readonly RUBY_VERSION_MAJOR=$(echo "$RUBY_VERSION"|cut -d . -f 1)
+  readonly RUBY_VERSION_MINOR=$(echo "$RUBY_VERSION"|cut -d . -f 2)
+  readonly RUBY_VERSION_TEENY=$(echo "$RUBY_VERSION"|cut -d . -f 3)
+fi
+readonly RUBY_VERSION
 
 # Read patch level from version.h.
 RUBY_PATCHLEVEL=`sed -n 's/^#define RUBY_PATCHLEVEL \([-0-9]*\)/\1/p' "$SRCDIR/version.h"`
@@ -36,7 +50,7 @@ readonly RUBY_PATCHLEVEL
 # Normally, you want to install both Xcode command line tools and apple-gcc42.
 # $ xcode-select --install
 # $ brew install apple-gcc42
-if [[ "$RUBY_MAJOR_VERSION" = "1" && "$RUBY_MINOR_VERSION" != "9" ]]; then
+if [[ "$RUBY_VERSION_MAJOR" = "1" && "$RUBY_VERSION_MINOR" != "9" ]]; then
   if type "gcc-4.2" 2>&1 >/dev/null; then
     export CC=$(which gcc-4.2)
     export CXX=$(which g++-4.2)
