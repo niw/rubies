@@ -1,7 +1,7 @@
 Rubies
 ======
 
-Rubies (or rbs) is a small script to switch Ruby runtime by rewriting PATH and GEM_HOME.
+Rubies (or rbs) is a small script to switch Ruby runtimes by rewriting `PATH` and `GEM_HOME` environment variables.
 No tricks. The script is written in Ruby works with a small shell script.
 
 *This script does*
@@ -26,26 +26,27 @@ Getting Started
         source "$HOME/.rubies/src/rubies.sh"
 
 3.  Install Ruby into `~/.rubies` by yourself from Ruby source code.
-    Example configure scripts, patches are in `~/.rubies/src/`.
+    Rubies provides configure scripts, patches are in `~/.rubies/src/`.
 
-        $ tar xzvf ruby-enterprise-1.8.7-2009.10.tar.gz
-        $ cd ruby-enterprise-1.8.7-2009.10
-        $ ./installer -a "$HOME/.rubies/ruby-enterprise-1.8.7-2009.10"
+        $ tar xjvf ruby-2.7.0.tar.bz2
+        $ mkdir -p ruby-2.7.0/build
+        $ cd ruby-2.7.0/build
+        $ sh ../../configure.sh
+        $ make install
 
 4.  If you wanted to select installed Ruby more easy, create a symlink.
 
         $ cd ~/.rubies
-        $ ln -s ruby-enterprise-1.8.7-2009.10 ree
+        $ ln -s ruby-2.7.0-p0 ruby27
 
 5.  Switch Ruby by `rubies` or `rbs` command.
 
-        $ rubies ree
+        $ rubies ruby27
 
 Switch Ruby in each Projects
 ----------------------------
 
-[rvm](https://rvm.beginrescueend.com/) provides `cd` command hook
-so we can switch Ruby in each project directories which is nice.
+[rvm](https://rvm.beginrescueend.com/) provides `cd` command hook so we can switch Ruby in each project directories which is nice.
 Rubies provides same hook which can read existing `.rvmrc` file.
 
 1.  Add `enable_rubies_cd_hook` in your `~/.bashrc` or `~/.zshrc`
@@ -58,4 +59,4 @@ Rubies provides same hook which can read existing `.rvmrc` file.
     `.rubiesrc` is YAML format.
 	We can use only `ruby` parameter for now which selects Ruby.
 
-        $ echo "ruby: ree" > ~/.rubiesrc
+        $ echo "ruby: ruby27" > ~/.rubiesrc
