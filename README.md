@@ -28,16 +28,16 @@ Getting Started
 3.  Install Ruby into `~/.rubies` by yourself from Ruby source code.
     Rubies provides configure scripts, patches are in `~/.rubies/src/`.
 
-        $ tar xjvf ruby-2.7.0.tar.bz2
-        $ mkdir -p ruby-2.7.0/build
-        $ cd ruby-2.7.0/build
+        $ tar xjvf ruby-2.7.2.tar.bz2
+        $ mkdir -p ruby-2.7.2/build
+        $ cd ruby-2.7.2/build
         $ sh ../../configure.sh
         $ make install
 
 4.  If you wanted to select installed Ruby more easy, create a symlink.
 
         $ cd ~/.rubies
-        $ ln -s ruby-2.7.0-p0 ruby27
+        $ ln -s ruby-2.7.2 ruby27
 
 5.  Switch Ruby by `rubies` or `rbs` command.
 
