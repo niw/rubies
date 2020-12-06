@@ -1,5 +1,6 @@
 .DS_Store
 /*
 !src
+src/ruby-*/
 !*LICENSE*
 !*README*
