@@ -98,7 +98,8 @@ readonly HAS_HOMEBREW
 # Use pkg-config to find `prefix` for each library.
 ensure_library() {
   local -r pkg_name=$1
-  local -r lib_name=${2:-$pkg_name}
+  local -r brew_name=${2:-$pkg_name}
+  local -r lib_name=${3:-$pkg_name}
 
   local prefix
   if ! prefix=$(pkg-config --variable=prefix "$pkg_name" 2>/dev/null); then
@@ -106,7 +107,7 @@ ensure_library() {
     # only available in each cellar.
     if (( HAS_HOMEBREW )); then
       local pkg_config_path
-      pkg_config_path="$PKG_CONFIG_PATH:$(brew --prefix "$lib_name" 2>/dev/null)/lib/pkgconfig"
+      pkg_config_path="$PKG_CONFIG_PATH:$(brew --prefix "$brew_name" 2>/dev/null)/lib/pkgconfig"
       readonly pkg_config_path
       if ! prefix=$(env PKG_CONFIG_PATH="$pkg_config_path" pkg-config --variable=prefix "$pkg_name" 2>/dev/null); then
         echo "$1 is not found" >&2
@@ -124,11 +125,11 @@ ensure_library() {
 
 # Not all, but default library used by Ruby.
 ensure_library readline
-ensure_library openssl
+ensure_library openssl openssl@1.1
 
 # Prior to Ruby 2.0.0, it doesn't have embedded libyaml.
 if [[ $RUBY_VERSION_MAJOR -eq 1 ]]; then
-  ensure_library yaml-0.1 libyaml
+  ensure_library yaml-0.1 libyaml libyaml
 fi
 
 readonly CONFIGURE_OPTIONS
